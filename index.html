@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KlizzStore | Top Up Game</title>
+
+<style>
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial, Helvetica, sans-serif;
+  background:linear-gradient(180deg,#08172f,#020918);
+  color:#fff;
+}
+h1{
+  text-align:center;
+  color:#00ffe1;
+}
+.subtitle{
+  text-align:center;
+  opacity:.75;
+  margin-bottom:20px;
+}
+.card{
+  background:#06122a;
+  border-radius:14px;
+  padding:16px;
+  max-width:420px;
+  margin:0 auto;
+  box-shadow:0 0 30px rgba(0,255,225,.15);
+}
+label{
+  display:block;
+  margin-top:12px;
+  margin-bottom:6px;
+  font-size:14px;
+}
+select,input{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+a.btn{
+  display:block;
+  margin-top:18px;
+  padding:15px;
+  text-align:center;
+  background:linear-gradient(90deg,#00ffe1,#5c6cff);
+  color:#000;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:16px;
+  text-decoration:none;
+}
+.note{
+  margin-top:14px;
+  font-size:13px;
+  opacity:.7;
+  text-align:center;
+}
+.footer{
+  text-align:center;
+  font-size:12px;
+  opacity:.5;
+  margin-top:22px;
+}
+</style>
+</head>
+<body>
+  
+<div class="logo">
+  <img src="Klizz.png" alt="KlizzStore" width="370px" height="150px">
+</div>
+<h1>KlizzStore</h1>
+<p class="subtitle">Top Up Game Cepat • Aman • Terpercaya</p>
+
+<div class="card">
+
+<div style="text-align:center;margin-bottom:12px;">
+  <img src="Klizz.png" style="width:80px;border-radius:12px;">
+</div>
+
+  <label>Pilih Game</label>
+  <select id="game">
+    <option value="">-- Pilih Game --</option>
+    <option value="ml">Mobile Legends</option>
+    <option value="ff">Free Fire</option>
+    <option value="pubg">PUBG Mobile</option>
+    <option value="roblox">Roblox</option>
+    <option value="hok">Honor of Kings</option>
+  </select>
+
+  <label>Pilih Paket</label>
+  <select id="paket">
+    <option value="">-- Pilih Paket --</option>
+  </select>
+
+  <label>User ID / Nick</label>
+  <input id="playerId" type="text" placeholder="Masukkan ID / Nick">
+
+  <label>Metode Pembayaran</label>
+  <select id="payment">
+    <option value="">-- Pilih Pembayaran --</option>
+    <option value="DANA">DANA</option>
+    <option value="GoPay">GoPay</option>
+    <option value="OVO">OVO</option>
+    <option value="ShopeePay">ShopeePay</option>
+    <option value="QRIS">QRIS</option>
+  </select>
+
+  <a id="orderBtn" href="#" class="btn">LANJUT KE WHATSAPP</a>
+
+  <p class="note">
+    Harga Sesuai Dengan Game<br>
+    + Admin Rp500
+  </p>
+</div>
+
+<div class="footer">
+  © 2025 KlizzStore
+</div>
+
+<script>
+const WA_NUMBER = "6289668141956";
+
+const hargaGame = {
+  ml: [
+    ["44 Diamond", 8000],
+    ["86 Diamond", 17000],
+    ["112 Diamond", 22000],
+    ["172 Diamond", 34000],
+    ["257 Diamond", 50000],
+    ["344 Diamond", 67000],
+    ["429 Diamond", 84000],
+    ["514 Diamond", 101000],
+    ["706 Diamond", 138000],
+    ["878 Diamond", 172000]
+  ],
+  ff: [
+    ["5 Diamond", 1000],
+    ["12 Diamond", 2000],
+    ["50 Diamond", 9000],
+    ["70 Diamond", 10000],
+    ["140 Diamond", 19000],
+    ["210 Diamond", 28000],
+    ["355 Diamond", 47000],
+    ["500 Diamond", 66000],
+    ["720 Diamond", 95000],
+    ["1000 Diamond", 130000]
+  ],
+  pubg: [
+    ["30 UC", 7000],
+    ["60 UC", 13000],
+    ["180 UC", 39000],
+    ["325 UC", 65000],
+    ["660 UC", 130000],
+    ["1800 UC", 350000]
+  ],
+  roblox: [
+    ["40 Robux", 8000],
+    ["80 Robux", 15000],
+    ["160 Robux", 30000],
+    ["240 Robux", 45000],
+    ["400 Robux", 75000],
+    ["800 Robux", 150000],
+    ["1700 Robux", 300000]
+  ],
+  hok: [
+    ["60 Token", 11000],
+    ["80 Token", 15000],
+    ["160 Token", 30000],
+    ["240 Token", 45000],
+    ["400 Token", 75000],
+    ["560 Token", 105000]
+  ]
+};
+
+const game = document.getElementById("game");
+const paket = document.getElementById("paket");
+const playerId = document.getElementById("playerId");
+const payment = document.getElementById("payment");
+const btn = document.getElementById("orderBtn");
+
+game.addEventListener("change", () => {
+  paket.innerHTML = `<option value="">-- Pilih Paket --</option>`;
+  if (!game.value) return;
+
+  hargaGame[game.value].forEach(item => {
+    const harga = item[1] + 500;
+    const opt = document.createElement("option");
+    opt.value = `${item[0]} - Rp ${harga}`;
+    opt.textContent = `${item[0]} - Rp ${harga.toLocaleString()}`;
+    paket.appendChild(opt);
+  });
+});
+
+btn.addEventListener("click", (e) => {
+  if (!game.value || !paket.value || !playerId.value.trim() || !payment.value) {
+    e.preventDefault();
+    alert("Lengkapi semua data dulu!");
+    return;
+  }
+
+  const gameName = game.options[game.selectedIndex].text;
+
+  const pesan =
+`ORDER KLIZZSTORE
+────────────────
+Game: ${gameName}
+Paket: ${paket.value}
+User ID: ${playerId.value}
+Pembayaran: ${payment.value}
+Admin: Rp1.000`;
+
+  btn.href =
+    "https://wa.me/" +
+    WA_NUMBER +
+    "?text=" +
+    encodeURIComponent(pesan);
+});
+</script>
+
+</body>
+</html>
